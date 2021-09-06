@@ -53,6 +53,8 @@ public class Exercise3Fragment extends Fragment {
         2. Start counting on background thread using loop and Thread.sleep()
         3. Show count in TextView
         4. When count completes, show "done" in TextView and enable the button
-         */
+
+        To see the solution run the solution 3 on the third fragment
+        **/
     }
 }

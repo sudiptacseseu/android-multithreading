@@ -41,7 +41,7 @@ public class Exercise2Fragment extends Fragment {
 
         To see the solution run the solution 2 on the second fragment
         **/
-        //countScreenTime();
+        countScreenTime();
     }
 
     @Override
