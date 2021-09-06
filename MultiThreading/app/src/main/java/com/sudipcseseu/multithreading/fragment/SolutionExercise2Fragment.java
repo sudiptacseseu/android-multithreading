@@ -12,13 +12,16 @@ import androidx.fragment.app.Fragment;
 
 import com.sudipcseseu.multithreading.R;
 
-public class Exercise2Fragment extends Fragment {
+import java.util.concurrent.atomic.AtomicBoolean;
 
-    public Exercise2Fragment(){
+public class SolutionExercise2Fragment extends Fragment {
+
+    public SolutionExercise2Fragment(){
         //required empty public constructor.
     }
 
     private byte[] mDummyData;
+    private final AtomicBoolean mCountAbort = new AtomicBoolean(false);
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,21 +38,19 @@ public class Exercise2Fragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        /*
-        This is forever running thread and this will create memory leak as garbage collector is
-        unable to clear the root.
-
-        To see the solution run the solution 2 on the second fragment
-        **/
-        //countScreenTime();
+        countScreenTime();
     }
 
     @Override
     public void onStop() {
         super.onStop();
+        mCountAbort.set(true);
     }
 
     private void countScreenTime() {
+
+        mCountAbort.set(false);
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -58,6 +59,9 @@ public class Exercise2Fragment extends Fragment {
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
+                        return;
+                    }
+                    if (mCountAbort.get()) {
                         return;
                     }
                     screenTimeSeconds++;

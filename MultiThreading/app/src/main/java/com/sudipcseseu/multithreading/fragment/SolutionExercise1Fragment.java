@@ -37,6 +37,10 @@ public class SolutionExercise1Fragment extends Fragment {
         mBtnCountIterations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*
+                In this approach the thread will terminate after the time set by the external
+                flag to prevent memory leak and make it available for garbage collector.
+                **/
                 countIterations();
             }
         });
