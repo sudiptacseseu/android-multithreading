@@ -13,11 +13,11 @@ import androidx.fragment.app.Fragment;
 
 import com.sudipcseseu.multithreading.R;
 
-public class Exercise1Fragment extends Fragment {
+public class SolutionExercise1Fragment extends Fragment {
 
     private static final int ITERATIONS_COUNTER_DURATION_SEC = 10;
 
-    public Exercise1Fragment(){
+    public SolutionExercise1Fragment(){
         //required empty public constructor.
     }
 
@@ -37,13 +37,6 @@ public class Exercise1Fragment extends Fragment {
         mBtnCountIterations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
-                Iterations are being counted on the main thread, if user clicks multiple events
-                at the same time then, it'll crash the application and throw an error like,
-                Skipped 599 frames! The application may be doing too much work on its main thread.
-
-                To see the solution run the solution 1 on the first fragment
-                **/
                 countIterations();
             }
         });
@@ -52,17 +45,22 @@ public class Exercise1Fragment extends Fragment {
     }
 
     private void countIterations() {
-        long startTimestamp = System.currentTimeMillis();
-        long endTimestamp = startTimestamp + ITERATIONS_COUNTER_DURATION_SEC * 1000;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                long startTimestamp = System.currentTimeMillis();
+                long endTimestamp = startTimestamp + ITERATIONS_COUNTER_DURATION_SEC * 1000;
 
-        int iterationsCount = 0;
-        while (System.currentTimeMillis() <= endTimestamp) {
-            iterationsCount++;
-        }
+                int iterationsCount = 0;
+                while (System.currentTimeMillis() <= endTimestamp) {
+                    iterationsCount++;
+                }
 
-        Log.d(
-                "Exercise1",
-                "iterations in " + ITERATIONS_COUNTER_DURATION_SEC + "seconds: " + iterationsCount
-        );
+                Log.d(
+                        "Exercise1",
+                        "iterations in " + ITERATIONS_COUNTER_DURATION_SEC + "seconds: " + iterationsCount
+                );
+            }
+        }).start();
     }
 }
